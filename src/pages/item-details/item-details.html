@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedItem">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{selectedItem.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-title>
+    <ion-item ion-item>
+      <ion-label floating>씬 제목</ion-label>
+      <ion-input [(ngModel)]="selectedItem.title"></ion-input>
+      <button ion-button item-right (click)="updateScene()">저장</button>
+    </ion-item>
+  </ion-title>
+  <ion-list *ngFor="let group of selectedItem.groups">
+    <ion-item-sliding *ngFor="let action of group.actions">
+      <ion-item (click)="showEditActionModal(group, action)">
+        {{action.title}}
+        <div *ngIf="action.time !== '0'" class="item-note"item-right>{{action.time}}</div>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="removeAction(group, action)">삭제</button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item>
+      <button ion-button (click)="showEditActionModal(group)">+ 메모 추가</button>
+      <button ion-button (click)="removeGroup(group)" color="danger">- 그룹 삭제</button>
+    </ion-item>
+  </ion-list>
+  <ion-item>
+    <button ion-button (click)="addGroup()">+ 그룹 추가</button>
+  </ion-item>
+  <ion-item>
+    <button ion-button item-right color="secondary" (click)="exportCSV()">
+      엑셀 다운로드
+    </button>
+  </ion-item>
+</ion-content>

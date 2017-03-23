@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>씬 목록</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item-divider color="primary">
+    씬 목록
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngIf="items.length === 0">
+      목록 없음
+    </ion-item>
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item>
+        {{item.title}}
+        <button ion-button item-right (click)="itemTapped(item)">편집</button>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="removeScene(item)">삭제</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-item-divider color="primary">
+    씬 추가
+  </ion-item-divider>
+  <ion-item>
+    <ion-label>템플릿</ion-label>
+    <ion-select [(ngModel)]="selectedTempleteIndex">
+      <ion-option value="-1">템플릿없음</ion-option>
+      <ion-option *ngFor="let templete of templetes; let i = index;"
+        [value]="i">
+        {{templete.title}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>씬 제목</ion-label>
+    <ion-input #newTitle></ion-input>
+    <button ion-button item-right (click)="addScene(newTitle)">+ 추가</button>
+  </ion-item>
+</ion-content>
